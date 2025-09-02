@@ -1,7 +1,7 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:toktik/config/helpers/human_formats.dart';
 import 'package:toktik/domain/entities/video_post.dart';
 import 'package:toktik/presentation/providers/discover_provider.dart';
 
@@ -31,6 +31,11 @@ class VideoButton extends StatelessWidget {
           iconData: Icons.remove_red_eye_outlined,
           value: videoPost.views,
         ),
+        SizedBox(height: 20,),
+         _CustomIconButton(
+          iconData: Icons.play_circle_filled_outlined,
+          value: 0,
+        ),
       ],
     );
   }
@@ -57,7 +62,8 @@ class _CustomIconButton extends StatelessWidget {
           onPressed: callback,
           icon: Icon(iconData, color: color),
         ),
-        Text('$value'),
+        if(value>0)
+        Text(HumanFormats.humanReadbleNumber(value)),
       ],
     );
   }

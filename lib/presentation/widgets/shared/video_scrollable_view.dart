@@ -3,15 +3,16 @@ import 'package:provider/provider.dart';
 import 'package:toktik/domain/entities/video_post.dart';
 import 'package:toktik/presentation/providers/discover_provider.dart';
 import 'package:toktik/presentation/widgets/shared/video_button.dart';
+import 'package:toktik/presentation/widgets/videos/full_screen_player.dart';
 
 class VideoScrollableView extends StatelessWidget {
-  VideoScrollableView(this.videos);
+  const VideoScrollableView(this.videos, {super.key});
   final List<VideoPost> videos;
 
   @override
   Widget build(BuildContext context) {
     final discoverProvider = context.watch<DiscoverProvider>();
-    
+
     return PageView.builder(
       scrollDirection: Axis.vertical,
       itemCount: videos.length,
@@ -23,14 +24,18 @@ class VideoScrollableView extends StatelessWidget {
       itemBuilder: (context, index) {
         return Stack(
           children: [
+            SizedBox.expand(
+              child: FullScreenPlayer(
+                videoUrl: videos[index].videoUrl,
+                caption: videos[index].caption,
+              ),
+            ),
             //video + gradiente
             //botoes
             Positioned(
               bottom: 30,
               right: 30,
-              child: VideoButton(
-                videoPost: videos[index],
-              ),
+              child: VideoButton(videoPost: videos[index]),
             ),
           ],
         );
